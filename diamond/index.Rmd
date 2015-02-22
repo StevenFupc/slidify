@@ -1,0 +1,65 @@
+---
+title       : How much is the diamond?
+subtitle    : Predict the price for a given weight with linear Regression Model
+author      : Steven Fu
+job         : Software Developer
+framework   : io2012        # {io2012, html5slides, shower, dzslides, ...}
+highlighter : highlight.js  # {highlight.js, prettify, highlight}
+hitheme     : tomorrow      # 
+widgets     : []            # {mathjax, quiz, bootstrap}
+mode        : selfcontained # {standalone, draft}
+knit        : slidify::knit2slides
+---
+
+## Introduction (Slide 2)
+
+How much is the diamond?
+
+This Shiny App is to display the relationship of weight and price of diamond, and to provide prediction of price for a given weight using linear regession.
+
+For a copy of the Shiny App:
+
+-URL: https://stevenfupc.shinyapps.io/devdataprod-011/
+
+-GitHub: https://github.com/StevenFupc/devdataprod-011
+
+---
+## Take a look at the dataset (Slide 3)
+
+The diamond dataset is from the build-in dataset.
+To get the data use library(UsingR); data(diamond).
+
+Take a look the dataset:
+```{r dataset, warning=FALSE}
+    library(UsingR)
+    data(diamond)
+    str(diamond)
+```
+
+--- 
+## Regression Model (Slide 4)
+The relationship of price and weight is shown below(linear regression).
+
+```{r plot, warning=FALSE, echo=FALSE}
+    library(UsingR)
+    data(diamond)
+    plot(diamond$carat,diamond$price, xlab="Mass(carats)", ylab="Price(SIN$)",
+         bg="lightblue",col="black",cex=1.1,pch=21,frame=FALSE)
+    abline(lm(price~carat,data=diamond),lwd=2)
+```
+
+--- 
+## Prediction (Slide 5)
+User enters a weight in carats (0.15 - 0.35).
+The app will predict the price and the range using linear regression model.
+For example, user enters 0.20 as weight.
+```{r predict, warning=FALSE}
+library(UsingR)
+data(diamond)
+fit <- lm(price ~ carat, data = diamond)
+values<-predict(fit, newdata = data.frame(carat = 0.20 ), interval = "prediction")
+values
+```
+The `r values[1]` is the predicted price; 
+and `r values[2]` ~ `r values[3]` is the predicted range.
+
